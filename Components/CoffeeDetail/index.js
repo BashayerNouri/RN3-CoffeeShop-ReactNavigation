@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { observer } from "mobx-react";
-
 // NativeBase Components
 import {
   Thumbnail,
@@ -12,7 +11,8 @@ import {
   List,
   ListItem,
   Picker,
-  Content
+  Content,
+  Icon
 } from "native-base";
 
 // Style
@@ -41,7 +41,11 @@ class CoffeeDetail extends Component {
 
   render() {
     if (!cafes) return <Content />;
-    const cafe = cafes[0];
+    // const cafe = cafes[0];
+    const { navigation } = this.props;
+    const cafeID = navigation.getParam("cafeID");
+    // cafes: data file
+    const cafe = cafes.find(cafe => cafeID === cafe.id);
     return (
       <Content>
         <List>
@@ -95,3 +99,16 @@ class CoffeeDetail extends Component {
 }
 
 export default observer(CoffeeDetail);
+
+CoffeeDetail.navigationOptions = ({ navigation }) => {
+  const cafeID = navigation.getParam("cafeID");
+  const cafe = cafes.find(cafe => cafeID === cafe.id);
+  return {
+    title: cafe.name,
+    headerRight: (
+      <Button transparent onPress={() => navigation.navigate("CartScreen")}>
+        <Icon type="AntDesign" name="shoppingcart" />
+      </Button>
+    )
+  };
+};
