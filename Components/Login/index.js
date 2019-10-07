@@ -49,6 +49,7 @@ const Login = ({ navigation }) => {
             </Form>
           </Body>
         </ListItem>
+        {/* navigation.replace not navigation.navigate to remove the back to login btn */}
         <Button full success onPress={() => navigation.navigate("ListScreen")}>
           <Text>Login</Text>
         </Button>
